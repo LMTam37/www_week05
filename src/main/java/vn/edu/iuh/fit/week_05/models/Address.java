@@ -18,7 +18,7 @@ public class Address {
     private String street;
     @Column(length = 50)
     private String city;
-    private short country;
+    private Short country;
     @Column(length = 20)
     private String number;
     @Column(length = 7)
