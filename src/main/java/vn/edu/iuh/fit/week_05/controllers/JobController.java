@@ -1,54 +1,64 @@
 package vn.edu.iuh.fit.week_05.controllers;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.iuh.fit.week_05.models.Address;
+import vn.edu.iuh.fit.week_05.models.Company;
 import vn.edu.iuh.fit.week_05.models.Job;
+import vn.edu.iuh.fit.week_05.services.CompanyService;
 import vn.edu.iuh.fit.week_05.services.JobService;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/jobs")
 public class JobController {
     @Autowired
     private JobService jobService;
-
+    @Autowired
+    private CompanyService companyService;
     @GetMapping
-    public List<Job> getAllJobs() {
-        return jobService.getAllJobs();
+    public String listJobs(Model model) {
+        List<Job> jobs = jobService.getAllJobs();
+        model.addAttribute("jobs", jobs);
+        return "jobs";
+    }
+
+    @GetMapping("/employerDashboard")
+    public String showEmployerDashboard(Model model) {
+        List<Company> companies = companyService.getAllCompanies();
+        model.addAttribute("companies", companies);
+        model.addAttribute("newCompany", new Company());
+        model.addAttribute("newAddress", new Address());
+        return "employerDashboard";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable Long id) {
+    public String getJobById(@PathVariable Long id, Model model) {
         Optional<Job> job = jobService.getJobById(id);
-        return job.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        job.ifPresent(value -> model.addAttribute("job", value));
+        return "jobs";
     }
 
     @PostMapping
-    public Job saveJob(@RequestBody Job job) {
-        return jobService.saveJob(job);
+    public String postJob(@ModelAttribute Job job) {
+        jobService.saveJob(job);
+        return "redirect:/jobs/employerDashboard";
     }
 
+
     @PutMapping
-    public ResponseEntity<Job> updateJob(@RequestBody Job job) {
-        try {
-            Job jobUpdated = jobService.updateJob(job.getJobId(), job);
-            return ResponseEntity.ok(jobUpdated);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public String updateJob(@ModelAttribute Job job) {
+        jobService.updateJob(job.getJobId(), job);
+        return "redirect:/jobs";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteJob(@PathVariable Long id) {
-        try {
-            jobService.deleteJobById(id);
-            return ResponseEntity.ok().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public String deleteJob(@PathVariable Long id) {
+        jobService.deleteJobById(id);
+        return "redirect:/jobs";
     }
 }
