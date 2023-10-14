@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.iuh.fit.week_05.enums.SkillType;
 
+import java.util.List;
+
 @Table(name = "skill")
 @Entity
 @Data
@@ -20,4 +22,6 @@ public class Skill {
     private String skill_description;
     private String skill_name;
     private SkillType type;
+    @OneToMany
+    private List<JobSkill> jobSkills;
 }

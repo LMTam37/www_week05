@@ -24,4 +24,6 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "company")
     private Company company;
+    @OneToMany
+    private List<JobSkill> jobSkills;
 }

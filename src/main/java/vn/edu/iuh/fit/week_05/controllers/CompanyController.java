@@ -17,7 +17,6 @@ public class CompanyController {
 
     @PostMapping("/add")
     public String addCompany(@ModelAttribute Company company, @ModelAttribute Address address) {
-        company.getAddress().add(address);
         companyService.saveCompany(company);
         return "redirect:/employerDashboard";
     }

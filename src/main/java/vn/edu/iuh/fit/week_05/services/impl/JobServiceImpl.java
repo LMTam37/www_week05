@@ -50,8 +50,6 @@ public class JobServiceImpl implements JobService {
                 existingJob.setJobDesc(updatedJob.getJobDesc());
             }
 
-            // Add other field checks here...
-
             return jobRepository.save(existingJob);
         } else {
             throw new EntityNotFoundException("Job not found with id: " + id);

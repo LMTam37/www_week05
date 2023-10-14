@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Table(name = "candidate")
 @Entity
@@ -21,7 +22,11 @@ public class Candidate {
     private String full_name;
     @Column(length = 15)
     private String phone;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "address")
     private Address address;
+    @OneToMany
+    private List<CandidateSkill> skillList;
+    @OneToMany
+    private List<Experience> experiences;
 }

@@ -23,5 +23,6 @@ public class Address {
     private String number;
     @Column(length = 7)
     private String zipcode;
-
+    @OneToOne
+    private Company company;
 }
