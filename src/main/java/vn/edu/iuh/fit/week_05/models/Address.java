@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "add_id")
     private Long id;
     @Column(length = 150)
     private String street;
@@ -23,6 +24,7 @@ public class Address {
     private String number;
     @Column(length = 7)
     private String zipcode;
-    @OneToOne
+    @OneToOne(mappedBy = "address")
+    @JoinColumn(name = "com_id")
     private Company company;
 }

@@ -17,11 +17,10 @@ import java.util.List;
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "skill_id")
-    private Long skillId;
-    private String skill_description;
-    private String skill_name;
-    private SkillType type;
-    @OneToMany
+    private Long id;
+    private String skillDescription;
+    private String skillName;
+    private SkillType skillType;
+    @OneToMany(mappedBy = "jobSkillPK.skill")
     private List<JobSkill> jobSkills;
 }

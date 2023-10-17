@@ -16,6 +16,7 @@ import java.util.List;
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "can_id")
     private Long id;
     private Date dob;
     private String email;
@@ -25,8 +26,8 @@ public class Candidate {
     @OneToOne
     @JoinColumn(name = "address")
     private Address address;
-    @OneToMany
+    @OneToMany(mappedBy = "candidateSkillPK.candidate")
     private List<CandidateSkill> skillList;
-    @OneToMany
+    @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
 }

@@ -42,16 +42,16 @@ public class SkillServiceImpl implements SkillService {
         if (optionalSkill.isPresent()) {
             Skill existingSkill = optionalSkill.get();
 
-            if (updatedSkill.getSkill_description() != null && !updatedSkill.getSkill_description().isEmpty()) {
-                existingSkill.setSkill_description(updatedSkill.getSkill_description());
+            if (updatedSkill.getSkillDescription() != null && !updatedSkill.getSkillDescription().isEmpty()) {
+                existingSkill.setSkillDescription(updatedSkill.getSkillDescription());
             }
 
-            if (updatedSkill.getSkill_name() != null && !updatedSkill.getSkill_name().isEmpty()) {
-                existingSkill.setSkill_name(updatedSkill.getSkill_name());
+            if (updatedSkill.getSkillName() != null && !updatedSkill.getSkillName().isEmpty()) {
+                existingSkill.setSkillName(updatedSkill.getSkillName());
             }
 
-            if (updatedSkill.getType() != null) {
-                existingSkill.setType(updatedSkill.getType());
+            if (updatedSkill.getSkillType() != null) {
+                existingSkill.setSkillType(updatedSkill.getSkillType());
             }
 
             return skillRepository.save(existingSkill);

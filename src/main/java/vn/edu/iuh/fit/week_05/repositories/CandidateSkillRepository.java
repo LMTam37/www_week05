@@ -15,7 +15,7 @@ public interface CandidateSkillRepository extends JpaRepository<CandidateSkill, 
     @Query("SELECT cs FROM CandidateSkill cs WHERE cs.candidateSkillPK.candidate.id = :candidateId")
     List<CandidateSkill> findByCandidateId(@Param("candidateId") Long candidateId);
 
-    @Query("SELECT cs FROM CandidateSkill cs WHERE cs.candidateSkillPK.skill.skillId = :skillId")
+    @Query("SELECT cs FROM CandidateSkill cs WHERE cs.candidateSkillPK.skill.id = :skillId")
     List<CandidateSkill> findBySkillId(@Param("skillId") Long skillId);
 
 }

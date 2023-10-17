@@ -52,7 +52,7 @@ public class JobController {
 
     @PutMapping
     public String updateJob(@ModelAttribute Job job) {
-        jobService.updateJob(job.getJobId(), job);
+        jobService.updateJob(job.getId(), job);
         return "redirect:/jobs";
     }
 

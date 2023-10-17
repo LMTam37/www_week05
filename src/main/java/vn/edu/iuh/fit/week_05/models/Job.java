@@ -16,14 +16,13 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_id")
-    private Long jobId;
-    @Column(name = "job_desc")
+    private Long id;
+    @Column(length = 2000)
     private String jobDesc;
-    @Column(name = "job_name")
     private String jobName;
     @ManyToOne
     @JoinColumn(name = "company")
     private Company company;
-    @OneToMany
+    @OneToMany(mappedBy = "jobSkillPK.job")
     private List<JobSkill> jobSkills;
 }
