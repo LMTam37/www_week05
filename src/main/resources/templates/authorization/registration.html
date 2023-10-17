@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully registered
+                    to our awesome app!
+                </div>
+            </div>
+
+            <h1>Registration</h1>
+
+            <form th:action="@{/registration}" method="post" th:object="${user}">
+                <div class="form-group">
+                    <label class="control-label" for="email"> Email </label> <input
+                        id="email" class="form-control" th:field="*{email}" required
+                        autofocus="autofocus"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="password"> Password </label> <input
+                        id="password" class="form-control" type="password"
+                        th:field="*{password}" required autofocus="autofocus"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Register as:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="userType" id="candidateRadio"
+                               value="candidate">
+                        <label class="form-check-label" for="candidateRadio">
+                            Candidate
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="userType" id="employerRadio"
+                               value="employer">
+                        <label class="form-check-label" for="employerRadio">
+                            Employer
+                        </label>
+                    </div>
+                </div>
+
+                <div id="candidateFields" style="display:none;" th:object="${candidate}">
+
+                    <div class="form-group">
+                        <label class="control-label" for="dob"> Date of Birth </label>
+                        <input type="date" class="form-control" id="dob" name="dob" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="full_name"> Full Name </label>
+                        <input id="full_name" class="form-control" th:field="*{full_name}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="phone"> Phone </label>
+                        <input id="phone" class="form-control" th:field="*{phone}" required/>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group">
+                        <label class="control-label" for="street"> Street </label>
+                        <input id="street" class="form-control" name="address.street" th:field="*{address.street}"
+                               required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="city"> City </label>
+                        <input id="city" class="form-control" name="address.city" th:field="*{address.city}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="country"> Country </label>
+                        <select id="country" class="form-control" name="address.country" th:field="*{address.country}"
+                                required>
+                            <option th:each="country : ${countryCode}" th:value="${country.numeric}"
+                                    th:text="${country.name + ' : ' + country.numeric}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="number"> Number </label>
+                        <input id="number" class="form-control" name="address.number" th:field="*{address.number}"
+                               required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="zipcode"> Zipcode </label>
+                        <input id="zipcode" class="form-control" name="address.zipcode" th:field="*{address.zipcode}"
+                               required/>
+                    </div>
+
+                    <!-- Candidate Skill -->
+                    <div class="form-group">
+                        <label class="control-label" for="skill"> Skill </label>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <select id="skill" class="form-control" name="skill" required>
+                                    <option th:each="skill : ${skills}" th:value="${skill.id}"
+                                            th:text="${skill.skillName}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-primary" id="addSkill">Add Skill</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedSkillsInput" name="selectedSkills" th:field="*{skillList}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <div id="selectedSkills"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="skillLevel"> Skill Level </label>
+                        <select id="skillLevel" class="form-control" name="skillLevel" required>
+                            <option value="BEGINNER">Beginner</option>
+                            <option value="ADVANCED">Advanced</option>
+                            <option value="PROFESSIONAL">Professional</option>
+                            <option value="INTERMEDIATE">Intermediate</option>
+                            <option value="MASTER">Master</option>
+                        </select>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="form-group">
+                        <label class="control-label" for="fromDate"> From Date </label>
+                        <input type="date" class="form-control" id="fromDate" name="fromDate" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="toDate"> To Date </label>
+                        <input type="date" class="form-control" id="toDate" name="toDate" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="companyName"> Company Name </label>
+                        <input id="companyName" class="form-control" name="companyName" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="role"> Role </label>
+                        <input id="role" class="form-control" name="role" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="workDescription"> Work Description </label>
+                        <textarea id="workDescription" class="form-control" name="workDescription" rows="3"
+                                  required></textarea>
+                    </div>
+
+                </div>
+
+                <div id="employerFields" style="display:none;" th:object="${company}">
+                    <div class="form-group">
+                        <label class="control-label" for="employerCompanyName"> Company Name </label>
+                        <input id="employerCompanyName" class="form-control" th:field="*{companyName}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="companyPhone"> Phone </label>
+                        <input id="companyPhone" class="form-control" th:field="*{phone}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="webUrl"> Website URL </label>
+                        <input id="webUrl" class="form-control" th:field="*{webUrl}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="about"> About </label>
+                        <textarea id="about" class="form-control" th:field="*{about}" rows="3" required></textarea>
+                    </div>
+
+                     Address
+                    <div class="form-group">
+                        <label class="control-label" for="companyStreet"> Street </label>
+                        <input id="companyStreet" class="form-control" name="address.street" th:field="*{address.street}"
+                               required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="companyCity"> City </label>
+                        <input id="companyCity" class="form-control" name="address.city" th:field="*{address.city}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="companyCountry"> Country </label>
+                        <select id="companyCountry" class="form-control" name="address.country" th:field="*{address.country}"
+                                required>
+                            <option th:each="country : ${countryCode}" th:value="${country.numeric}"
+                                    th:text="${country.name + ' : ' + country.numeric}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="CompanyNumber"> Number </label>
+                        <input id="CompanyNumber" class="form-control" name="address.number" th:field="*{address.number}"
+                               required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="companyZipcode"> Zipcode </label>
+                        <input id="companyZipcode" class="form-control" name="address.zipcode" th:field="*{address.zipcode}"
+                               required/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <span>Already registered? <a href="/static" th:href="@{/login}">Login
+								here</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[type=radio][name=userType]').change(function () {
+            if (this.value === 'candidate') {
+                $('#candidateFields').show();
+                $('#employerFields').hide();
+            } else if (this.value === 'employer') {
+                $('#candidateFields').hide();
+                $('#employerFields').show();
+            }
+        });
+    });
+</script>
+
+</html>

@@ -35,7 +35,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(registry ->
-                        registry.anyRequest().authenticated())
+                        registry.requestMatchers("/registration**").permitAll()
+                                .anyRequest().authenticated())
                 .formLogin(formLoginConfigurer -> formLoginConfigurer
                         .loginPage("/login")
                         .loginProcessingUrl("/do-login")

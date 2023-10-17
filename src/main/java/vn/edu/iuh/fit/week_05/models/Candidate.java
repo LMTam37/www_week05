@@ -30,4 +30,17 @@ public class Candidate {
     private List<CandidateSkill> skillList;
     @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
+
+    @Override
+    public String toString() {
+        String s = "Candidate{" +
+                "id=" + id +
+                ", dob=" + dob +
+                ", email='" + email + '\'' +
+                ", full_name='" + full_name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address=" + address +
+                '}';
+        return s;
+    }
 }

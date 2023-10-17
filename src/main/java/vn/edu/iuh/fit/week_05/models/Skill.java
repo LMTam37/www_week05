@@ -17,6 +17,7 @@ import java.util.List;
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "skill_id")
     private Long id;
     private String skillDescription;
     private String skillName;

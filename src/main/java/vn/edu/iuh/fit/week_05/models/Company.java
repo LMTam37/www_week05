@@ -23,7 +23,7 @@ public class Company {
     private String companyName;
     private String phone;
     private String webUrl;
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
     @OneToMany(mappedBy = "company")
