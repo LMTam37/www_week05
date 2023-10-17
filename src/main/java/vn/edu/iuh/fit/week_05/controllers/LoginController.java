@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
+    public String login() {
+        return "/authorization/login";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String processLogin(Authentication authentication) {
         if (authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_EMPLOYER"))) {
