@@ -15,16 +15,17 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "com_id")
+    @Column(name = "comp_id")
     private Long id;
     @Column(length = 2000)
     private String about;
     private String email;
+    @Column(name = "comp_name")
     private String companyName;
     private String phone;
     private String webUrl;
     @OneToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address", unique = true)
     private Address address;
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;

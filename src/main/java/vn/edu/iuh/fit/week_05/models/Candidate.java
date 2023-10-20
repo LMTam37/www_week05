@@ -19,28 +19,16 @@ public class Candidate {
     @Column(name = "can_id")
     private Long id;
     private Date dob;
+    @Column(unique = true)
     private String email;
     private String full_name;
-    @Column(length = 15)
+    @Column(length = 15, unique = true)
     private String phone;
     @OneToOne
-    @JoinColumn(name = "address")
+    @JoinColumn(name = "address", unique = true)
     private Address address;
     @OneToMany(mappedBy = "candidateSkillPK.candidate")
     private List<CandidateSkill> skillList;
     @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
-
-    @Override
-    public String toString() {
-        String s = "Candidate{" +
-                "id=" + id +
-                ", dob=" + dob +
-                ", email='" + email + '\'' +
-                ", full_name='" + full_name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address=" + address +
-                '}';
-        return s;
-    }
 }
