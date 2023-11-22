@@ -7,6 +7,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import vn.edu.iuh.fit.week_05.models.Job;
 import vn.edu.iuh.fit.week_05.models.Skill;
 
@@ -19,8 +20,10 @@ import java.io.Serializable;
 public class JobSkillPK implements Serializable {
     @JoinColumn(name = "job_id")
     @ManyToOne
+    @ToString.Exclude
     private Job job;
     @JoinColumn(name = "skill_id")
     @ManyToOne
+    @ToString.Exclude
     private Skill skill;
 }

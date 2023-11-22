@@ -21,6 +21,7 @@ public class Skill {
     private Long id;
     private String skillDescription;
     private String skillName;
+    @Enumerated(EnumType.ORDINAL)
     private SkillType skillType;
     @OneToMany(mappedBy = "jobSkillPK.skill")
     private List<JobSkill> jobSkills;

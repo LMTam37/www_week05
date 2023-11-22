@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "company")
     private Company company;
-    @OneToMany(mappedBy = "jobSkillPK.job")
+    @OneToMany(mappedBy = "jobSkillPK.job", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<JobSkill> jobSkills;
 }

@@ -3,6 +3,7 @@ package vn.edu.iuh.fit.week_05.services.impl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.edu.iuh.fit.week_05.models.Company;
 import vn.edu.iuh.fit.week_05.models.Job;
 import vn.edu.iuh.fit.week_05.repositories.JobRepository;
 import vn.edu.iuh.fit.week_05.services.JobService;
@@ -54,5 +55,10 @@ public class JobServiceImpl implements JobService {
         } else {
             throw new EntityNotFoundException("Job not found with id: " + id);
         }
+    }
+
+    @Override
+    public List<Job> getJobsByCompany(Company company) {
+        return jobRepository.findByCompany(company);
     }
 }

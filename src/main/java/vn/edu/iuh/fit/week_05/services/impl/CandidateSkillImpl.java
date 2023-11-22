@@ -50,4 +50,14 @@ public class CandidateSkillImpl implements CandidateSkillService {
     public void deleteCandidateSkill(CandidateSkillPK candidateSkillPK) {
         candidateSkillRepository.deleteById(candidateSkillPK);
     }
+
+    @Override
+    public void deleteCandidateSkill(CandidateSkill candidateSkill) {
+        candidateSkillRepository.delete(candidateSkill);
+    }
+
+    @Override
+    public Optional<CandidateSkill> getCandidateSkillByCandidateAndSkillId(Long id, Long skillId) {
+        return candidateSkillRepository.findByCandidateSkillPK_Candidate_IdAndCandidateSkillPK_Skill_Id(id, skillId);
+    }
 }

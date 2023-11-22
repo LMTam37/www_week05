@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employer Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Employer Dashboard</h1>
+    <form th:action="@{/jobs/postJob}" method="post" th:object="${job}">
+        <div class="form-group">
+            <label for="jobDescription">Job Description</label>
+            <input type="text" class="form-control" id="jobDescription" name="jobDesc" th:value="*{jobDesc}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="jobName">Job Name</label>
+            <input type="text" class="form-control" id="jobName" name="jobName" th:value="*{jobName}" required>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Skill Type</th>
+                <th>Skill Level</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="skill : ${skills}">
+                <td th:text="${skill.skillName}"></td>
+                <td th:text="${skill.skillType.name()}"></td>
+                <td>
+                    <select class="form-control" th:id="'skillLevel_' + ${skill.id}">
+                        <option value="0">Beginner</option>
+                        <option value="1">Advanced</option>
+                        <option value="2">Professional</option>
+                        <option value="3">Intermediate</option>
+                        <option value="4">Master</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success"
+                            th:id="'button_' + ${skill.id}"
+                            th:onclick="'console.log(\'' + ${skill.id} + '\'); toggleSkill(' + ${skill.id} + ', \'button_' + ${skill.id} + '\')'"
+                            th:text="'Add'">Add
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div hidden="hidden">
+            <label for="skillsNeed">Selected Skills:</label>
+            <input type="text" class="form-control" id="skillsNeed" name="skillsNeed" readonly>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-2">Post Job</button>
+    </form>
+
+    <h2>Company Jobs</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Job Name</th>
+            <th>Job Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job : ${currentCompany.jobs}">
+            <td th:text="${job.id}"></td>
+            <td th:text="${job.jobName}"></td>
+            <td th:text="${job.jobDesc}"></td>
+            <td>
+                <a th:href="@{'/jobs/candidates/' + ${job.id}}" class="btn btn-primary">View Candidates</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <script th:inline="javascript">
+        var selectedSkills = [];
+
+        function toggleSkill(skillId, buttonId) {
+            var index = selectedSkills.findIndex(skill => parseInt(skill.id) === parseInt(skillId));
+
+            if (index === -1) {
+                var skillLevel = document.getElementById('skillLevel_' + skillId).value;
+                selectedSkills.push({id: parseInt(skillId), level: skillLevel});
+                document.getElementById(buttonId).innerText = 'Remove';
+                document.getElementById(buttonId).classList.remove('btn-success');
+                document.getElementById(buttonId).classList.add('btn-danger');
+            } else {
+                selectedSkills.splice(index, 1);
+                document.getElementById(buttonId).innerText = 'Add';
+                document.getElementById(buttonId).classList.remove('btn-danger');
+                document.getElementById(buttonId).classList.add('btn-success');
+            }
+
+            document.getElementById('skillsNeed').value = JSON.stringify(selectedSkills);
+        }
+    </script>
+
+
+</div>
+</body>
+</html>

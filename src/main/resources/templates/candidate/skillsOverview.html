@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Skills Overview</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Skills Overview</h1>
+    <a th:href="@{/jobs}" class="btn btn-primary">Go to Jobs</a>
+    <div class="row">
+        <div class="col">
+            <h2>Skills You Have</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Skill</th>
+                    <th>Skill Level</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="skill : ${candidateSkills}">
+                    <td th:text="${skill.candidateSkillPK.skill.skillName}"></td>
+                    <td th:text="${skill.skillLevel}"></td>
+                    <td>
+                        <form th:action="@{/candidate/removeSkill}" method="post">
+                            <input type="hidden" th:name="skillId" th:value="${skill.candidateSkillPK.skill.id}">
+                            <button type="submit" class="btn btn-danger">Remove Skill</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+                <h2>Skills to Learn</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="skill : ${skillsToLearn}">
+                        </td>
+                        <form th:action="@{/candidate/addSkill}" method="post">
+                            <td th:text="${skill.skillName}"></td>
+                            <td>
+                                <div class="input-group">
+                                    <select class="custom-select" id="skillLevelSelect" name="skillLevel">
+                                        <option value="BEGINNER">Beginner</option>
+                                        <option value="ADVANCED">Advanced</option>
+                                        <option value="PROFESSIONAL">Professional</option>
+                                        <option value="INTERMEDIATE">Intermediate</option>
+                                        <option value="MASTER">Master</option>
+                                    </select>
+
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-success">Add Skill</button>
+                                        <input type="hidden" th:name="skillId" th:value="${skill.id}">
+                                    </div>
+                                </div>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

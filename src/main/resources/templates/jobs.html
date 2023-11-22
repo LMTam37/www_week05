@@ -8,7 +8,23 @@
 </head>
 <body>
 <div class="container mt-4">
+    <div class="d-flex justify-content-between">
+        <div>
+            <a th:href="@{/jobs/employerDashboard}" class="btn btn-primary" th:if="${isEmployer}">
+                Go to Employer Dashboard
+            </a>
+
+            <a th:href="@{/candidate}" class="btn btn-primary" th:if="${isCandidate}">
+                Go to Candidate Skills Overview
+            </a>
+        </div>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </div>
     <h1>All Jobs</h1>
+
     <table class="table">
         <thead>
         <tr>
@@ -21,12 +37,12 @@
         </thead>
         <tbody>
         <tr th:each="job : ${jobs}">
-            <td th:text="${job.jobId}"></td>
+            <td th:text="${job.id}"></td>
             <td th:text="${job.jobName}"></td>
             <td th:text="${job.jobDesc}"></td>
             <td th:text="${job.company.getCompanyName()}"></td>
             <td>
-                <form th:action="@{'/apply/' + ${job.jobId}}" method="post">
+                <form th:action="@{'/apply/' + ${job.id}}" method="post">
                     <button type="submit" class="btn btn-primary">Apply</button>
                 </form>
             </td>

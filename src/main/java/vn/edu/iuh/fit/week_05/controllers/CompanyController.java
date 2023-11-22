@@ -18,6 +18,6 @@ public class CompanyController {
     @PostMapping("/add")
     public String addCompany(@ModelAttribute Company company, @ModelAttribute Address address) {
         companyService.saveCompany(company);
-        return "redirect:/employerDashboard";
+        return "redirect:/employer/employerDashboard";
     }
 }

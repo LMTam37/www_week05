@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.week_05.services;
 
+import vn.edu.iuh.fit.week_05.models.Company;
 import vn.edu.iuh.fit.week_05.models.Job;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface JobService {
     List<Job> getAllJobs();
     void deleteJobById(Long id);
     Job updateJob(Long id, Job updatedJob);
+    List<Job> getJobsByCompany(Company company);
 }

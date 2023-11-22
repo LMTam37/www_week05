@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -28,5 +29,6 @@ public class Company {
     @JoinColumn(name = "address", unique = true)
     private Address address;
     @OneToMany(mappedBy = "company")
+    @ToString.Exclude
     private List<Job> jobs;
 }

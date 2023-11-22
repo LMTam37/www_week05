@@ -7,6 +7,7 @@ import vn.edu.iuh.fit.week_05.models.Company;
 import vn.edu.iuh.fit.week_05.repositories.CompanyRepository;
 import vn.edu.iuh.fit.week_05.services.CompanyService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,20 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Optional<Company> getCompanyById(Long id) {
         return companyRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Company> getCurrentUserCompany(Principal principal) {
+        if (principal != null) {
+            String userEmail = principal.getName();
+            return getCompanyByEmail(userEmail);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Company> getCompanyByEmail(String email) {
+        return companyRepository.findCompanyByEmail(email);
     }
 
     @Override

@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.week_05.models.Candidate;
+import vn.edu.iuh.fit.week_05.models.Skill;
 import vn.edu.iuh.fit.week_05.repositories.CandidateRepository;
 import vn.edu.iuh.fit.week_05.services.CandidateService;
 
@@ -14,6 +15,11 @@ import java.util.Optional;
 public class CandidateServiceImpl implements CandidateService {
     @Autowired
     private CandidateRepository candidateRepository;
+
+    @Override
+    public Optional<Candidate> getCandidateByEmail(String email) {
+        return candidateRepository.findByEmail(email);
+    }
 
     @Override
     public List<Candidate> getAllCandidates() {
@@ -66,5 +72,10 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public void deleteCandidate(Long id) {
         candidateRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Candidate> findBySkill(Skill skill) {
+        return candidateRepository.findBySkill(skill);
     }
 }

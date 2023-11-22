@@ -14,5 +14,7 @@ public interface CandidateSkillService {
     List<CandidateSkill> getCandidateSkillsBySkillId(Long skillId);
     CandidateSkill updateCandidateSkill(CandidateSkill candidateSkill);
     void deleteCandidateSkill(CandidateSkillPK candidateSkillPK);
+    void deleteCandidateSkill(CandidateSkill candidateSkill);
+    Optional<CandidateSkill> getCandidateSkillByCandidateAndSkillId(Long id, Long skillId);
 }
 
